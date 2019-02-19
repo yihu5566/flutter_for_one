@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_app/http/api.dart';
-import 'package:flutter_app/http/base_res.dart';
+import 'package:flutter_for_one/http/api.dart';
+import 'package:flutter_for_one/http/base_res.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 

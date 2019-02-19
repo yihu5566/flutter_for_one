@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/account/account.dart';
-import 'package:flutter_app/ui/all/all.dart';
-import 'package:flutter_app/ui/index/index.dart';
+import 'package:flutter_for_one/ui/account/account.dart';
+import 'package:flutter_for_one/ui/all/all.dart';
+import 'package:flutter_for_one/ui/index/index.dart';
 
 class Home extends StatelessWidget {
   @override

@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/http/api.dart';
-import 'package:flutter_app/http/http_util.dart';
-import 'package:flutter_app/ui/index/MainBean.dart';
+import 'package:flutter_for_one/http/api.dart';
+import 'package:flutter_for_one/http/http_util.dart';
+import 'package:flutter_for_one/ui/index/MainBean.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_app/utils/common_utils.dart';
+import 'package:flutter_for_one/utils/common_utils.dart';
 
 class Index extends StatefulWidget {
   @override

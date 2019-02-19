@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/home.dart';
+import 'package:flutter_for_one/ui/home.dart';
 
 void main() => runApp(new Home());
