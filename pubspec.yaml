@@ -24,7 +24,7 @@ dependencies:
   english_words: ^3.1.0
   http: '>=0.11.3+12'
   dio: "^1.0.13"
-
+  transparent_image: "^0.1.0"
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +51,14 @@ flutter:
     - assets/images/favourite_gray.png
     - assets/images/home.png
     - assets/images/home_active.png
+    - assets/images/default_indi_bg.png
+    - assets/images/center_bg.png
+    - assets/images/center_image_collection.png
+    - assets/images/center_movie_collection.png
+    - assets/images/center_music_collection.png
+    - assets/images/center_radio_collection.png
+    - assets/images/center_reading_collection.png
+
 
     - jsonfile.json
 #    - images/a_dot_ham.jpeg

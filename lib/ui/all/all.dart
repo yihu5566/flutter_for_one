@@ -3,6 +3,7 @@ import 'package:flutter_for_one/http/api.dart';
 import 'package:flutter_for_one/http/http_util.dart';
 import 'package:flutter_for_one/ui/all/all_item1.dart';
 import 'package:flutter_for_one/ui/all/author_item.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class All extends StatefulWidget {
   @override
@@ -342,7 +343,10 @@ class ViewBodyItem extends StatelessWidget {
         children: <Widget>[
           new Container(
             padding: const EdgeInsets.only(top: 10),
-            child: new Image.network(_cover),
+            child: new FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              image: _cover,
+            ),
           ),
           new Container(
             padding: const EdgeInsets.only(top: 10, bottom: 10),

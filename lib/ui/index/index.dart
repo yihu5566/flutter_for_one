@@ -6,6 +6,7 @@ import 'package:flutter_for_one/http/http_util.dart';
 import 'package:flutter_for_one/ui/index/MainBean.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_for_one/utils/common_utils.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -260,7 +261,10 @@ class ListViewItem extends StatelessWidget {
               ],
             ),
           ),
-          new Image.network(content_bean.img_url),
+          new FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image: content_bean.img_url,
+          ),
           new Text(content_bean.forward),
           new Container(
             margin: const EdgeInsets.only(top: 20, bottom: 20),
@@ -278,7 +282,10 @@ class ListViewItem extends StatelessWidget {
                   width: 20,
                   height: 20,
                 ),
-                new Text(content_bean.like_count.toString()),
+                new Text(
+                  content_bean.like_count.toString(),
+                  style: TextStyle(fontSize: 10, height: -2),
+                ),
                 new Image.asset(
                   'assets/images/feeds_share.png',
                   width: 20,
@@ -313,7 +320,10 @@ class ListViewHeadItem extends StatelessWidget {
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          new Image.network(content_bean.img_url),
+          new FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image: content_bean.img_url,
+          ),
           new Container(
             alignment: Alignment.center,
             margin: const EdgeInsets.only(top: 20, bottom: 20),
@@ -365,7 +375,10 @@ class ListViewHeadItem extends StatelessWidget {
                   width: 20,
                   height: 20,
                 ),
-                new Text(content_bean.like_count.toString()),
+                new Text(
+                  content_bean.like_count.toString(),
+                  style: TextStyle(fontSize: 10, height: -2),
+                ),
               ],
             ),
           ),
