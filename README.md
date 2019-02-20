@@ -1,16 +1,7 @@
-# flutter_app
+# 一个学习flutter的例子，使用了one的接口数据。本项目只是用来学习的，不可用于商业用途，如有侵权，联系作者删除。qq：591871713
 
 A new Flutter application.
 
-## Getting Started
+## 目前完成了主页面的一些功能，二级页面持续开发中
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
