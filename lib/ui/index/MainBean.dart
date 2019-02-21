@@ -61,6 +61,7 @@ class WeatherBean {
 }
 
 class ContentBean {
+  String item_id;
   String id;
   String title;
   String img_url;
@@ -74,6 +75,7 @@ class ContentBean {
   ShareInfo share_info;
 
   ContentBean({
+    this.item_id,
     this.id,
     this.title,
     this.img_url,
@@ -89,6 +91,7 @@ class ContentBean {
 
   factory ContentBean.fromJson(Map<String, dynamic> json) {
     return new ContentBean(
+        item_id: json['item_id'],
         id: json['id'],
         title: json['title'],
         img_url: json['img_url'],

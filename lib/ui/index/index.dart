@@ -5,6 +5,9 @@ import 'package:flutter_for_one/http/api.dart';
 import 'package:flutter_for_one/http/http_util.dart';
 import 'package:flutter_for_one/ui/index/MainBean.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_for_one/ui/index/article_details.dart';
+import 'package:flutter_for_one/ui/index/article_details_bean.dart';
+import 'package:flutter_for_one/ui/index/article_details_webview.dart';
 import 'package:flutter_for_one/utils/common_utils.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -222,6 +225,7 @@ class IndexState extends State<Index> {
 class ListViewItem extends StatelessWidget {
   var content_bean;
   var mtitle;
+  BuildContext mContext;
 
   ListViewItem(content_list, title) {
     content_bean = content_list;
@@ -230,73 +234,87 @@ class ListViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return new Container(
+    mContext = context;
+    return new GestureDetector(
+      onTap: () {
+        onClickItem(content_bean, mtitle);
+      },
+      child: new Container(
 //      alignment: Alignment.center,
-      margin: const EdgeInsets.all(20),
-      child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new Text(mtitle == null ? "" : mtitle),
-          new Container(
-            alignment: Alignment.topLeft,
-            margin: const EdgeInsets.only(bottom: 20),
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                new Text(
-                  content_bean.title,
-                  style: new TextStyle(
-                    color: Colors.purple,
-                    fontSize: 20.0,
+        margin: const EdgeInsets.all(20),
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new Text(mtitle == null ? "" : mtitle),
+            new Container(
+              alignment: Alignment.topLeft,
+              margin: const EdgeInsets.only(bottom: 20),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Text(
+                    content_bean.title,
+                    style: new TextStyle(
+                      color: Colors.purple,
+                      fontSize: 20.0,
+                    ),
                   ),
-                ),
-                new Text(
-                  "文/${content_bean.author.user_name}",
-                  style: new TextStyle(
-                    color: Colors.purple,
-                    fontSize: 16.0,
+                  new Text(
+                    "文/${content_bean.author.user_name}",
+                    style: new TextStyle(
+                      color: Colors.purple,
+                      fontSize: 16.0,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          new FadeInImage.memoryNetwork(
-            placeholder: kTransparentImage,
-            image: content_bean.img_url,
-          ),
-          new Text(content_bean.forward),
-          new Container(
-            margin: const EdgeInsets.only(top: 20, bottom: 20),
-            child: new Row(
-              children: <Widget>[
-                new Expanded(
-                  child: new Text(DateUtil.getDateStrByTimeStr(
-                      content_bean.post_date,
-                      format: DateFormat.ZH_MONTH_DAY,
-                      dateSeparate: "-",
-                      timeSeparate: "-")),
-                ),
-                new Image.asset(
-                  'assets/images/feeds_laud_default.png',
-                  width: 20,
-                  height: 20,
-                ),
-                new Text(
-                  content_bean.like_count.toString(),
-                  style: TextStyle(fontSize: 10, height: -2),
-                ),
-                new Image.asset(
-                  'assets/images/feeds_share.png',
-                  width: 20,
-                  height: 20,
-                ),
-              ],
+            new FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              image: content_bean.img_url,
             ),
-          ),
-        ],
+            new Text(content_bean.forward),
+            new Container(
+              margin: const EdgeInsets.only(top: 20, bottom: 20),
+              child: new Row(
+                children: <Widget>[
+                  new Expanded(
+                    child: new Text(DateUtil.getDateStrByTimeStr(
+                        content_bean.post_date,
+                        format: DateFormat.ZH_MONTH_DAY,
+                        dateSeparate: "-",
+                        timeSeparate: "-")),
+                  ),
+                  new Image.asset(
+                    'assets/images/feeds_laud_default.png',
+                    width: 20,
+                    height: 20,
+                  ),
+                  new Text(
+                    content_bean.like_count.toString(),
+                    style: TextStyle(fontSize: 10, height: -2),
+                  ),
+                  new Image.asset(
+                    'assets/images/feeds_share.png',
+                    width: 20,
+                    height: 20,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  void onClickItem(content_bean, mtitle) {
+    print("click");
+    Navigator.push(
+        mContext,
+        new MaterialPageRoute(
+            builder: (context) =>
+                new ArticleDetailsWebView(content_bean.item_id, mtitle)));
   }
 }
 

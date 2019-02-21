@@ -3,6 +3,7 @@ import 'package:flutter_for_one/http/api.dart';
 import 'package:flutter_for_one/http/http_util.dart';
 import 'package:flutter_for_one/ui/all/all_item1.dart';
 import 'package:flutter_for_one/ui/all/author_item.dart';
+import 'package:flutter_for_one/ui/all/classify_details.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class All extends StatefulWidget {
@@ -156,10 +157,12 @@ class AllState extends State<All> {
 
 class ViewHeadItem extends StatelessWidget {
   List<String> tabName = ['图文', '问答', '阅读', '连载', '影视', '音乐', '电台'];
+  BuildContext mContext;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    mContext = context;
+
     return new Container(
       padding: const EdgeInsets.all(10),
       child: new Column(
@@ -175,18 +178,23 @@ class ViewHeadItem extends StatelessWidget {
               children: <Widget>[
                 new Expanded(
                   flex: 1,
-                  child: new Container(
-                    height: 65,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: new ExactAssetImage('assets/images/time.jpeg'),
-                        fit: BoxFit.cover,
+                  child: new GestureDetector(
+                    onTap: () {
+                      clickItem(0, '图文');
+                    },
+                    child: new Container(
+                      height: 65,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: new ExactAssetImage('assets/images/time.jpeg'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    child: new Padding(
-                      padding: EdgeInsets.only(top: 45, left: 30),
-                      child: new Text(
-                        tabName[0],
+                      child: new Padding(
+                        padding: EdgeInsets.only(top: 45, left: 30),
+                        child: new Text(
+                          tabName[0],
+                        ),
                       ),
                     ),
                   ),
@@ -194,18 +202,26 @@ class ViewHeadItem extends StatelessWidget {
                 new Expanded(
                   flex: 1,
                   child: new Container(
-                    height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: new ExactAssetImage('assets/images/time.jpeg'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: new Padding(
-                      padding: EdgeInsets.only(top: 45, left: 30),
-                      child: new Text(
-                        tabName[1],
+                    child: new GestureDetector(
+                      onTap: () {
+                        clickItem(3, '问答');
+                      },
+                      child: new Container(
+                        height: 65,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                new ExactAssetImage('assets/images/time.jpeg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: new Padding(
+                          padding: EdgeInsets.only(top: 45, left: 30),
+                          child: new Text(
+                            tabName[1],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -214,17 +230,25 @@ class ViewHeadItem extends StatelessWidget {
                   flex: 2,
                   child: new Container(
                     margin: const EdgeInsets.only(left: 5),
-                    height: 65,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: new ExactAssetImage('assets/images/flower.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: new Padding(
-                      padding: EdgeInsets.only(top: 45, left: 60),
-                      child: new Text(
-                        tabName[2],
+                    child: new GestureDetector(
+                      onTap: () {
+                        clickItem(1, '阅读');
+                      },
+                      child: new Container(
+                        height: 65,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                new ExactAssetImage('assets/images/flower.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: new Padding(
+                          padding: EdgeInsets.only(top: 45, left: 60),
+                          child: new Text(
+                            tabName[2],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -237,20 +261,24 @@ class ViewHeadItem extends StatelessWidget {
             children: <Widget>[
               new Expanded(
                 flex: 1,
-                child: new Container(
-                  height: 65,
-
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: new ExactAssetImage('assets/images/time.jpeg'),
-                      fit: BoxFit.cover,
+                child: new GestureDetector(
+                  onTap: () {
+                    clickItem(2, '连载');
+                  },
+                  child: new Container(
+                    height: 65,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: new ExactAssetImage('assets/images/time.jpeg'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
 //                  padding: const EdgeInsets.all(25),
-                  child: new Padding(
-                    padding: EdgeInsets.only(top: 45, left: 30),
-                    child: new Text(
-                      tabName[3],
+                    child: new Padding(
+                      padding: EdgeInsets.only(top: 45, left: 30),
+                      child: new Text(
+                        tabName[3],
+                      ),
                     ),
                   ),
                 ),
@@ -258,20 +286,27 @@ class ViewHeadItem extends StatelessWidget {
               new Expanded(
                 flex: 1,
                 child: new Container(
-                  height: 65,
-
                   margin: const EdgeInsets.only(left: 5),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: new ExactAssetImage('assets/images/time.jpeg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: new GestureDetector(
+                    onTap: () {
+                      clickItem(5, '影视');
+                    },
+                    child: new Container(
+                      height: 65,
+
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: new ExactAssetImage('assets/images/time.jpeg'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
 //                  padding: const EdgeInsets.all(25),
-                  child: new Padding(
-                    padding: EdgeInsets.only(top: 45, left: 30),
-                    child: new Text(
-                      tabName[4],
+                      child: new Padding(
+                        padding: EdgeInsets.only(top: 45, left: 30),
+                        child: new Text(
+                          tabName[4],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -279,20 +314,27 @@ class ViewHeadItem extends StatelessWidget {
               new Expanded(
                 flex: 1,
                 child: new Container(
-                  height: 65,
-
                   margin: const EdgeInsets.only(left: 5),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: new ExactAssetImage('assets/images/time.jpeg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: new GestureDetector(
+                    onTap: () {
+                      clickItem(4, '音乐');
+                    },
+                    child: new Container(
+                      height: 65,
+
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: new ExactAssetImage('assets/images/time.jpeg'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
 //                  padding: const EdgeInsets.all(25),
-                  child: new Padding(
-                    padding: EdgeInsets.only(top: 45, left: 30),
-                    child: new Text(
-                      tabName[5],
+                      child: new Padding(
+                        padding: EdgeInsets.only(top: 45, left: 30),
+                        child: new Text(
+                          tabName[5],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -300,20 +342,27 @@ class ViewHeadItem extends StatelessWidget {
               new Expanded(
                 flex: 1,
                 child: new Container(
-                  height: 65,
-
                   margin: const EdgeInsets.only(left: 5),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: new ExactAssetImage('assets/images/time.jpeg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: new GestureDetector(
+                    onTap: () {
+                      clickItem(8, '电台');
+                    },
+                    child: new Container(
+                      height: 65,
+
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: new ExactAssetImage('assets/images/time.jpeg'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
 //                  padding: const EdgeInsets.all(25),
-                  child: new Padding(
-                    padding: EdgeInsets.only(top: 45, left: 30),
-                    child: new Text(
-                      tabName[6],
+                      child: new Padding(
+                        padding: EdgeInsets.only(top: 45, left: 30),
+                        child: new Text(
+                          tabName[6],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -323,6 +372,13 @@ class ViewHeadItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void clickItem(int i, String s) {
+    Navigator.push(
+        mContext,
+        new MaterialPageRoute(
+            builder: (context) => new ClassifyDetails(i.toString(), s)));
   }
 }
 
@@ -364,7 +420,7 @@ class ViewBody2Item extends StatefulWidget {
 
   ViewBody2Item(List<DataAuthorItem> title) {
     _title = title;
-    print("ViewBody2Item构建：" + _title[0].web_url);
+//    print("ViewBody2Item构建：" + _title[0].web_url);
   }
 
   @override
@@ -411,7 +467,7 @@ class ViewBodyState extends State<ViewBody2Item> {
 
   void onCartChanged() {
     setState(() {
-      print("setState");
+//      print("setState");
     });
   }
 
@@ -433,7 +489,7 @@ class ViewBodyState extends State<ViewBody2Item> {
       currentIndex = 1;
     }
     for (int i = 0; i < tempList.length; i++) {
-      print("筛选结果：：" + tempList[i].toString());
+//      print("筛选结果：：" + tempList[i].toString());
     }
 
     return new Column(
@@ -446,7 +502,7 @@ class ViewBodyState extends State<ViewBody2Item> {
   }
 
   _createItem(DataAuthorItem title) {
-    print("构建条目了：" + title.web_url);
+//    print("构建条目了：" + title.web_url);
     return new Container(
         margin: const EdgeInsets.only(top: 20),
         child: new Row(
