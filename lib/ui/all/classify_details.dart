@@ -7,7 +7,6 @@ import 'package:flutter_for_one/http/api.dart';
 import 'package:flutter_for_one/http/http_util.dart';
 import 'package:flutter_for_one/ui/all/classify_details_bean.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-
 import 'package:flutter_html/flutter_html.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -19,7 +18,6 @@ class ClassifyDetails extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return new ClassifyDetailsState(title, item_id);
   }
 }
@@ -28,8 +26,7 @@ class ClassifyDetailsState extends State<ClassifyDetails> {
   String item_id;
   String title;
   ClassifyDetailsBean _bean;
-  String _webUrl =
-      'file:///data/user/0/com.example.flutterapp/app_flutter/wenshan_details.html';
+  String _webUrl = '';
   final String fileName = 'wenshan_details.html';
 
   ClassifyDetailsState(this.title, this.item_id);
@@ -57,24 +54,6 @@ class ClassifyDetailsState extends State<ClassifyDetails> {
         });
       }
     }, params: map);
-//    startTime();
-  }
-
-  startTime() async {
-    //设置启动图生效时间
-    var _duration = new Duration(seconds: 4);
-
-    new Timer(_duration, updata);
-  }
-
-  updata() {
-    print("setState");
-
-    setState(() {
-      _webUrl =
-          'file:///data/user/0/com.example.flutterapp/app_flutter/wenshan_details.html';
-      print(_webUrl);
-    });
   }
 
   void _writeDataFile(String data) async {
@@ -96,36 +75,44 @@ class ClassifyDetailsState extends State<ClassifyDetails> {
   @override
   Widget build(BuildContext context) {
     // WebviewScaffold是插件提供的组件，用于在页面上显示一个WebView并加载URL
+    return new Container(
+      child: new Stack(
+        overflow: Overflow.visible,
+        alignment: AlignmentDirectional.topStart,
+        children: <Widget>[
+          new WebviewScaffold(
+            appBar: new AppBar(
+              title: new Padding(
+                  padding: const EdgeInsets.only(left: 70),
+                  child: _bean == null
+                      ? new Row(
+                          children: <Widget>[
+                            new Text(title),
+                            new Icon(Icons.keyboard_arrow_down),
+                            new CircularProgressIndicator(),
 
-    return new Scaffold(
-        body: _bean == null
-            ? new Center(
-                child: new Text('数据加载中...'),
-              )
-            : new WebviewScaffold(
-                appBar: new AppBar(
-                    title: new Padding(
-                      padding: const EdgeInsets.only(left: 50),
-                      child: new MaterialButton(
-                        child: new Row(
+                          ],
+                        )
+                      : new Row(
                           children: <Widget>[
                             new Text(title),
                             new Icon(Icons.keyboard_arrow_down),
                           ],
-                        ),
-                        onPressed: () {
-                          showTopDialog();
-                        },
-                      ),
-                    )),
-                withLocalUrl: true,
-                withLocalStorage: true,
-                url: _webUrl,
-              ));
+                        )),
+            ),
+            withLocalUrl: true,
+            withLocalStorage: true,
+            url: _webUrl,
+            withJavascript: true,
+            withZoom: true,
+          ),
+        ],
+      ),
+    );
   }
 
   showTopDialog() {
-    showDialog<Null>(
+    showCupertinoModalPopup<Null>(
       context: context,
       builder: (BuildContext context) {
         return new SimpleDialog(

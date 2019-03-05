@@ -186,7 +186,7 @@ class ViewHeadItem extends StatelessWidget {
                       height: 65,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: new ExactAssetImage('assets/images/time.jpeg'),
+                          image: new ExactAssetImage('assets/images/music_cover.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -194,6 +194,7 @@ class ViewHeadItem extends StatelessWidget {
                         padding: EdgeInsets.only(top: 45, left: 30),
                         child: new Text(
                           tabName[0],
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
@@ -212,7 +213,7 @@ class ViewHeadItem extends StatelessWidget {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image:
-                                new ExactAssetImage('assets/images/time.jpeg'),
+                                new ExactAssetImage('assets/images/music_cover.png'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -220,6 +221,8 @@ class ViewHeadItem extends StatelessWidget {
                           padding: EdgeInsets.only(top: 45, left: 30),
                           child: new Text(
                             tabName[1],
+                            style: TextStyle(color: Colors.white),
+
                           ),
                         ),
                       ),
@@ -247,6 +250,8 @@ class ViewHeadItem extends StatelessWidget {
                           padding: EdgeInsets.only(top: 45, left: 60),
                           child: new Text(
                             tabName[2],
+                            style: TextStyle(color: Colors.white),
+
                           ),
                         ),
                       ),
@@ -269,7 +274,7 @@ class ViewHeadItem extends StatelessWidget {
                     height: 65,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: new ExactAssetImage('assets/images/time.jpeg'),
+                        image: new ExactAssetImage('assets/images/music_cover.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -278,6 +283,8 @@ class ViewHeadItem extends StatelessWidget {
                       padding: EdgeInsets.only(top: 45, left: 30),
                       child: new Text(
                         tabName[3],
+                        style: TextStyle(color: Colors.white),
+
                       ),
                     ),
                   ),
@@ -296,7 +303,7 @@ class ViewHeadItem extends StatelessWidget {
 
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: new ExactAssetImage('assets/images/time.jpeg'),
+                          image: new ExactAssetImage('assets/images/music_cover.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -305,6 +312,8 @@ class ViewHeadItem extends StatelessWidget {
                         padding: EdgeInsets.only(top: 45, left: 30),
                         child: new Text(
                           tabName[4],
+                          style: TextStyle(color: Colors.white),
+
                         ),
                       ),
                     ),
@@ -324,7 +333,7 @@ class ViewHeadItem extends StatelessWidget {
 
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: new ExactAssetImage('assets/images/time.jpeg'),
+                          image: new ExactAssetImage('assets/images/music_cover.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -333,6 +342,8 @@ class ViewHeadItem extends StatelessWidget {
                         padding: EdgeInsets.only(top: 45, left: 30),
                         child: new Text(
                           tabName[5],
+                          style: TextStyle(color: Colors.white),
+
                         ),
                       ),
                     ),
@@ -352,7 +363,7 @@ class ViewHeadItem extends StatelessWidget {
 
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: new ExactAssetImage('assets/images/time.jpeg'),
+                          image: new ExactAssetImage('assets/images/music_cover.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -361,6 +372,8 @@ class ViewHeadItem extends StatelessWidget {
                         padding: EdgeInsets.only(top: 45, left: 30),
                         child: new Text(
                           tabName[6],
+                          style: TextStyle(color: Colors.white),
+
                         ),
                       ),
                     ),

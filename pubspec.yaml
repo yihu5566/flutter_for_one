@@ -62,6 +62,7 @@ flutter:
     - assets/images/center_music_collection.png
     - assets/images/center_radio_collection.png
     - assets/images/center_reading_collection.png
+    - assets/images/music_cover.png
 
 
     - jsonfile.json
