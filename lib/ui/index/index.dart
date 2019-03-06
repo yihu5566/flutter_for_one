@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_for_one/http/api.dart';
 import 'package:flutter_for_one/http/http_util.dart';
+import 'package:flutter_for_one/ui/account/account_user_info.dart';
 import 'package:flutter_for_one/ui/index/MainBean.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_for_one/ui/index/article_details.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_for_one/ui/index/article_details_bean.dart';
 import 'package:flutter_for_one/ui/index/article_details_webview.dart';
 import 'package:flutter_for_one/utils/common_utils.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class Index extends StatefulWidget {
 
 class IndexState extends State<Index> {
   List<ListItem> itemList = [];
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   var _mMainBean;
   PageController _pageController;
@@ -30,6 +33,7 @@ class IndexState extends State<Index> {
     super.initState();
     _pageController = new PageController();
     getData(_currentIndex);
+    getUserData();
   }
 
   @override
@@ -40,6 +44,35 @@ class IndexState extends State<Index> {
 
   Future<String> _loadAddressAsset() async {
     return await rootBundle.loadString('assets/jsonfile.json');
+  }
+
+  void getUserData() async {
+    Map<String, String> map = new Map();
+    map["city"] = 'Beijing';
+    map["user_id"] = '10072491';
+    map["channel"] = 'mi';
+    map["sign"] = '40b0c368ea163385f5aba9c885cb3e83';
+    map["version"] = '4.5.7';
+    map["uuid"] = 'ffffffff-d33b-3794-ffff-ffff8546fc17';
+    map["platform"] = 'android';
+    map['jwt'] =
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDg2NTUxMzYsInVzZXJpZCI6IjEwMDcyNDkxIn0.11a8JFBWL1ecZ-LYCts5YJMRwi3Yi1pR9YMpKfSD30o';
+
+    final SharedPreferences prefs = await _prefs;
+
+    var dataLocality = prefs.get('data');
+    LogUtil.e(Api.account_user_infor_url);
+    if (dataLocality == null) {
+      LogUtil.e("本地没有数据，开始网络请求");
+
+      ///添加中间
+      HttpUtil.get(Api.account_user_infor_url, (data) {
+        if (data != null) {
+          var decode = json.encode(data);
+          prefs.setString("data", decode);
+        }
+      }, params: map);
+    }
   }
 
 //获取数据
@@ -65,7 +98,7 @@ class IndexState extends State<Index> {
     map["uuid"] = 'ffffffff-d33b-3794-ffff-ffff8546fc17';
     map["platform"] = 'android';
     var time = DateUtil.getTime(_currentIndex);
-    LogUtil.e(Api.One + time + "/北京");
+//    LogUtil.e(Api.One + time + "/北京");
     HttpUtil.get(Api.One + time + "/北京", (data) {
       if (data != null) {
         Map<String, dynamic> responseJson = data;

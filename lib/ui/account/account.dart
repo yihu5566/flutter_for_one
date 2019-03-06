@@ -1,31 +1,61 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_for_one/http/api.dart';
+import 'package:flutter_for_one/http/http_util.dart';
+import 'package:flutter_for_one/ui/account/account_edit_bean.dart';
+import 'package:flutter_for_one/ui/account/account_user_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Account extends StatelessWidget {
+class Account extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return new MainAccount();
+  }
+}
+
+class MainAccount extends State<Account> {
+  var _mMainBean;
+  var userInfo;
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  @override
+  void initState() {
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new MainAccount(),
-      appBar: new AppBar(
-        leading: new Container(
-          child: new IconButton(
-            icon: new Icon(Icons.settings),
-            onPressed: () {
-              showMyDialog(context);
-            },
-          ),
-        ),
-        actions: <Widget>[
-          new Container(
-            padding: const EdgeInsets.only(right: 15),
-            child: new Icon(Icons.message),
-          ),
-        ],
-        title: new Text("飞翔的鲨鱼"),
-        centerTitle: true,
-      ),
-    );
+    // TODO: implement build
+    return _mMainBean == null
+        ? new Center(
+            child: new CircularProgressIndicator(),
+          )
+        : new Scaffold(
+            body: new MainBody(_mMainBean, userInfo),
+            appBar: new AppBar(
+              leading: new Container(
+                child: new IconButton(
+                  icon: new Icon(Icons.settings),
+                  onPressed: () {
+                    showMyDialog(context);
+                  },
+                ),
+              ),
+              actions: <Widget>[
+                new Container(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: new Icon(Icons.message),
+                ),
+              ],
+              title: userInfo == null
+                  ? new Text('未加载')
+                  : new Text(userInfo.user_name),
+              centerTitle: true,
+            ),
+          );
   }
 
   showMyDialog(BuildContext context) {
@@ -51,10 +81,80 @@ class Account extends StatelessWidget {
           ),
     );
   }
+
+  void getData() {
+    Map<String, String> map = new Map();
+    map["city"] = 'Beijing';
+    map["user_id"] = '10072491';
+    map["channel"] = 'mi';
+    map["sign"] = '40b0c368ea163385f5aba9c885cb3e83';
+    map["version"] = '4.5.7';
+    map["uuid"] = 'ffffffff-d33b-3794-ffff-ffff8546fc17';
+    map["platform"] = 'android';
+    map['jwt'] =
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDg2NTUxMzYsInVzZXJpZCI6IjEwMDcyNDkxIn0.11a8JFBWL1ecZ-LYCts5YJMRwi3Yi1pR9YMpKfSD30o';
+
+    ///添加中间
+    HttpUtil.get(Api.account_edit_url, (data) {
+      if (data != null) {
+        List<dynamic> responseJson = data;
+        var address = new AccountEditBean.fromJson(responseJson);
+//        print("格式化数据：：" + data['MenuBean']);
+        getUserData(address);
+      }
+    }, params: map);
+
+    ///获取用户信息
+  }
+
+  Future getUserData(AccountEditBean main) async {
+    final SharedPreferences prefs = await _prefs;
+    var data = prefs.getString("data");
+    if (data != null) {
+      print("获取本地数据成功，开始：" + data.toString());
+      Map<String, dynamic> responseJson = json.decode(data);
+      print("获取本地数据成功，结束：" + responseJson.toString());
+      AccountUserInfoBean bean = new AccountUserInfoBean.fromJson(responseJson);
+
+      setState(() {
+        userInfo = bean;
+        _mMainBean = main.title[0];
+        print("本地数据处理成功：" + bean.toString());
+      });
+    }
+
+//    Map<String, String> map = new Map();
+//    map["city"] = 'Beijing';
+//    map["user_id"] = '10072491';
+//    map["channel"] = 'mi';
+//    map["sign"] = '40b0c368ea163385f5aba9c885cb3e83';
+//    map["version"] = '4.5.7';
+//    map["uuid"] = 'ffffffff-d33b-3794-ffff-ffff8546fc17';
+//    map["platform"] = 'android';
+//    map['jwt'] =
+//        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDg2NTUxMzYsInVzZXJpZCI6IjEwMDcyNDkxIn0.11a8JFBWL1ecZ-LYCts5YJMRwi3Yi1pR9YMpKfSD30o';
+//
+//    ///添加中间
+//    HttpUtil.get(Api.account_user_infor_url, (data) {
+//      if (data != null) {
+//        Map<String, dynamic> responseJson = data;
+//        var address = new AccountUserInfoBean.fromJson(responseJson);
+////        print("格式化数据：：" + data['MenuBean']);
+//        setState(() {
+//          userInfo = address;
+//          print("数据多少啊：：  ");
+//        });
+//      }
+//    }, params: map);
+  }
 }
 
-class MainAccount extends StatelessWidget {
+class MainBody extends StatelessWidget {
   List<Widget> itemList = [];
+  var mMainBean;
+  var userInfo;
+
+  MainBody(this.mMainBean, this.userInfo);
 
   @override
   Widget build(BuildContext context) {
@@ -81,15 +181,14 @@ class MainAccount extends StatelessWidget {
                     child: new FadeInImage.assetNetwork(
                       placeholder: "/assets/images/time.jpeg",
                       //预览图
-                      image:
-                          "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3463668003,3398677327&fm=58",
+                      image: userInfo.web_url,
                       width: 60.0,
                       height: 60.0,
                     ),
                   ),
                   new Container(
                     margin: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: new Text("飞翔的鲨鱼"),
+                    child: new Text(userInfo.user_name),
                   ),
 
                   ///下面是编辑框
@@ -108,8 +207,8 @@ class MainAccount extends StatelessWidget {
                           decoration: new BoxDecoration(
                             image: new DecorationImage(
                               fit: BoxFit.fill, // 填满
-                              image: new ExactAssetImage(
-                                'assets/images/center_bg.png',
+                              image: new NetworkImage(
+                                mMainBean.picture,
                               ),
                             ),
                           ),
@@ -141,7 +240,7 @@ class MainAccount extends StatelessWidget {
                           ),
                         ),
                         new Text(
-                          "读王小波的寻找无双",
+                          mMainBean.content,
                           textAlign: TextAlign.start,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
