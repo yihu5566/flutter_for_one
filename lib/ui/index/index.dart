@@ -1,17 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_for_one/http/api.dart';
 import 'package:flutter_for_one/http/http_util.dart';
-import 'package:flutter_for_one/ui/account/account_user_info.dart';
 import 'package:flutter_for_one/ui/index/MainBean.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_for_one/ui/index/article_details.dart';
-import 'package:flutter_for_one/ui/index/article_details_bean.dart';
 import 'package:flutter_for_one/ui/index/article_details_webview.dart';
 import 'package:flutter_for_one/utils/common_utils.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class Index extends StatefulWidget {
   @override

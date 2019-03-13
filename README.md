@@ -2,6 +2,14 @@
 
 A new Flutter application.
 
+
+[博客传松门](https://blog.csdn.net/shayubuhuifei/article/details/88527861)
+
+
 ## 目前完成了主页面的一些功能，二级页面持续开发中
+
+#### 效果图
+
+![主要内容](/image/one-img.png)
 
 
