@@ -32,8 +32,9 @@ class AccountData {
   int id;
   String date;
   String cover;
+  bool isLeft;
 
-  AccountData({this.id, this.date, this.cover});
+  AccountData({this.id, this.date, this.cover, this.isLeft});
 
   factory AccountData.fromJson(Map<String, dynamic> json) {
     return new AccountData(

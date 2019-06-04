@@ -6,6 +6,7 @@ import 'package:flutter_for_one/time_selector/flutter_cupertino_date_picker.dart
 
 import 'package:flutter_for_one/ui/index/history_bean.dart';
 import 'package:flutter_for_one/utils/common_utils.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class HistoryRecord extends StatefulWidget {
   @override
@@ -17,6 +18,8 @@ class HistoryRecord extends StatefulWidget {
 
 class HistoryRecordState extends State<HistoryRecord> {
   List _mMainBean;
+  List<AccountData> _staggeredTiles;
+
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
   String newTime = DateUtil.getCurrentMonthTime();
@@ -68,18 +71,25 @@ class HistoryRecordState extends State<HistoryRecord> {
               body: Column(
                 children: <Widget>[
                   Flexible(
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, //横轴三个子widget
-                        childAspectRatio: 1, //宽高比为1时，子widget
-                      ),
-                      itemCount: _mMainBean.length,
-                      itemBuilder: (context, index) {
-                        AccountData bean = _mMainBean[index];
-                        return _getGridViewItemUI(context, bean, index);
-                      },
-                      controller: _scrollController,
-                    ),
+                    child: new StaggeredGridView.countBuilder(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 4.0,
+                        crossAxisSpacing: 4.0,
+                        padding: const EdgeInsets.all(4.0),
+                        itemCount: _mMainBean.length,
+                        itemBuilder: (context, index) {
+                          AccountData bean = _mMainBean[index];
+                          return _getGridViewItemUI(context, bean, index);
+                        },
+                        controller: _scrollController,
+                        staggeredTileBuilder: (int index) {
+                          AccountData bean1 = _mMainBean[index];
+                          if (bean1.cover == "title" && bean1.id != 1) {
+                            return new StaggeredTile.count(2, 0.2);
+                          } else {
+                            return new StaggeredTile.count(1, 1);
+                          }
+                        }),
                   ),
                   GestureDetector(
                       onTap: () {
@@ -123,24 +133,38 @@ class HistoryRecordState extends State<HistoryRecord> {
           setState(() {
             if (_mMainBean == null) {
               _mMainBean = List();
+              _staggeredTiles = List<AccountData>();
             }
-            var accountData = AccountData();
-            accountData.cover = "title";
-            accountData.date = newTime;
-            if (_mMainBean.length % 2 == 0) {
+
+            if (address.title.length % 2 == 0) {
+              var accountData = AccountData();
+              accountData.cover = "title";
+              accountData.date = newTime;
+              accountData.isLeft = true;
               _mMainBean.add(accountData);
-              _mMainBean.add(accountData);
+              _mMainBean.addAll(address.title);
+
+//              var accountData1 = AccountData();
+//              accountData1.cover = "title";
+//              accountData1.date = newTime;
+//              accountData1.isLeft = false;
+//              _mMainBean.add(accountData1);
             } else {
+              var accountData = AccountData();
+              accountData.cover = "title";
+              accountData.date = newTime;
+              accountData.isLeft = true;
+              _mMainBean.add(accountData);
+              _mMainBean.addAll(address.title);
+
               var accountTemp = AccountData();
               accountTemp.cover = "title";
               accountTemp.date = newTime;
               accountTemp.id = 1;
               _mMainBean.add(accountTemp);
-              _mMainBean.add(accountData);
-              _mMainBean.add(accountData);
             }
 
-            _mMainBean.addAll(address.title);
+            _staggeredTiles.addAll(address.title);
             isPerformingRequest = false;
           });
           if (_mMainBean.length < 10) {
@@ -154,10 +178,14 @@ class HistoryRecordState extends State<HistoryRecord> {
 
   Widget _getGridViewItemUI(BuildContext context, AccountData city, int index) {
     if (city.cover == "title") {
+      print(city.isLeft);
       if (city.id != 1) {
         return Container(
-          color: Colors.grey,
-          child: Text(city.date),
+          margin: const EdgeInsets.only(left: 5, right: 5),
+          child: Text(
+            "----------- " + city.date.substring(5) + " 月 -----------",
+            style: TextStyle(fontSize: 15, color: Colors.black38),
+          ),
           alignment: Alignment.center,
         );
       } else {

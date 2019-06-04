@@ -7,6 +7,11 @@ import 'package:flutter_for_one/http/http_util.dart';
 import 'package:flutter_for_one/ui/index/MainBean.dart';
 import 'package:flutter_for_one/ui/index/article_details_webview.dart';
 import 'package:flutter_for_one/ui/index/history_record.dart';
+import 'package:flutter_for_one/ui/test/example_1.dart';
+import 'package:flutter_for_one/ui/test/example_2.dart';
+import 'package:flutter_for_one/ui/test/example_3.dart';
+import 'package:flutter_for_one/ui/test/example_4.dart';
+import 'package:flutter_for_one/ui/test/example_5.dart';
 import 'package:flutter_for_one/utils/common_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -366,7 +371,16 @@ class ListViewItem extends StatelessWidget {
       mContext,
       new MaterialPageRoute(
         builder: (context) =>
-            new ArticleDetailsWebView(content_bean.item_id, mtitle),
+//            ArticleDetailsWebView(content_bean.item_id, mtitle),
+
+        Example01(),
+//        Example02(),
+//        Example03(),
+//        Example04(),
+//        Example05(),
+//        Example06(),
+//        Example07(),
+//        Example08(),
       ),
     );
   }
