@@ -371,16 +371,7 @@ class ListViewItem extends StatelessWidget {
       mContext,
       new MaterialPageRoute(
         builder: (context) =>
-//            ArticleDetailsWebView(content_bean.item_id, mtitle),
-
-        Example01(),
-//        Example02(),
-//        Example03(),
-//        Example04(),
-//        Example05(),
-//        Example06(),
-//        Example07(),
-//        Example08(),
+            ArticleDetailsWebView(content_bean.item_id, mtitle),
       ),
     );
   }
