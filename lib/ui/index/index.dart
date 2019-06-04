@@ -6,6 +6,7 @@ import 'package:flutter_for_one/http/api.dart';
 import 'package:flutter_for_one/http/http_util.dart';
 import 'package:flutter_for_one/ui/index/MainBean.dart';
 import 'package:flutter_for_one/ui/index/article_details_webview.dart';
+import 'package:flutter_for_one/ui/index/history_record.dart';
 import 'package:flutter_for_one/utils/common_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -24,6 +25,7 @@ class IndexState extends State<Index> {
   var _mMainBean;
   PageController _pageController;
   int _currentIndex = 0;
+  var mContext;
 
   @override
   void initState() {
@@ -101,7 +103,6 @@ class IndexState extends State<Index> {
         Map<String, dynamic> responseJson = data;
         var address = new MainBean.fromJson(responseJson);
 //        print("格式化数据：：" + data['MenuBean']);
-
         setState(() {
           _mMainBean = address;
           itemList.clear();
@@ -148,36 +149,56 @@ class IndexState extends State<Index> {
 
   @override
   Widget build(BuildContext context) {
-    print("开始布局了：" + _mMainBean.toString());
-
+//    print("开始布局了：" + _mMainBean.toString());
+    mContext = context;
     return Scaffold(
         appBar: _mMainBean == null
-            ? AppBar(title: new Text(""))
-            : _currentIndex == 0
-                ? AppBar(
-                    title: new Row(
-                      children: <Widget>[
-                        new Expanded(
-                            child: new Text(_mMainBean.weatherBean.date)),
-                        new Text(
-                          "${_mMainBean.weatherBean.city_name} .${_mMainBean.weatherBean.climate} ${_mMainBean.weatherBean.temperature}°C",
-                          style: new TextStyle(fontSize: 15),
-                        )
-                      ],
+            ? AppBar(title: new Text("加载中。。。"))
+            : AppBar(
+                title: new Row(
+                  children: <Widget>[
+                    new Expanded(
+                      child: new GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            mContext,
+                            new MaterialPageRoute(
+                                builder: (context) => new HistoryRecord()),
+                          ).then((result) {
+                            print("我是页面返回" + result.toString());
+                            if (result == null) return;
+                            setState(() {
+                              _currentIndex = result as int;
+                              getData(_currentIndex);
+                              _pageController.jumpToPage(_currentIndex);
+                            });
+                          });
+                        },
+                        child: new Text(_mMainBean.weatherBean.date),
+                      ),
                     ),
-                  )
-                : AppBar(
-                    title: new Row(
-                      children: <Widget>[
-                        new Expanded(
-                            child: new Text(_mMainBean.weatherBean.date)),
-                        new Text(
-                          "今天",
-                          style: new TextStyle(fontSize: 15),
-                        )
-                      ],
-                    ),
-                  ),
+                    _currentIndex == 0
+                        ? new Text(
+                            "${_mMainBean.weatherBean.city_name}·${_mMainBean.weatherBean.climate} ${_mMainBean.weatherBean.temperature}°C",
+                            style: new TextStyle(fontSize: 15),
+                          )
+                        : new GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _currentIndex = 0;
+                              });
+                              getData(_currentIndex);
+                              _pageController.jumpToPage(_currentIndex);
+                            },
+                            child: new Text(
+                              "今天",
+                              style: new TextStyle(fontSize: 15),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+//
         body: _mMainBean == null
             ? new Center(child: Text("数据加载中。。。"))
             : PageView.builder(
@@ -202,30 +223,32 @@ class IndexState extends State<Index> {
         padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
         child: new GestureDetector(
           child: new Material(
-              elevation: 5.0,
-              child: RefreshIndicator(
-                  onRefresh: _onRefresh,
-                  child: new ListView.builder(
-                    itemCount: itemList.length,
-                    itemBuilder: (context, index) {
-                      final item = itemList[index];
-                      if (item is ListHeadItem) {
+            elevation: 5.0,
+            child: RefreshIndicator(
+              onRefresh: _onRefresh,
+              child: new ListView.builder(
+                itemCount: itemList.length,
+                itemBuilder: (context, index) {
+                  final item = itemList[index];
+                  if (item is ListHeadItem) {
 //                        return new ListViewItem(item.itemData);
-                        return divideTiles(
-                            tiles: new ListViewHeadItem(
-                                item.itemData, item.mMainBean),
-                            context: context,
-                            color: Colors.grey);
-                      } else if (item is ListBodyItem) {
+                    return divideTiles(
+                        tiles:
+                            new ListViewHeadItem(item.itemData, item.mMainBean),
+                        context: context,
+                        color: Colors.grey);
+                  } else if (item is ListBodyItem) {
 //                        return new ListViewItem(item.itemData);
-                        return divideTiles(
-                            tiles: new ListViewItem(item.itemData, item.title),
-                            context: context,
-                            color: Colors.grey);
-                      }
-                    },
-                    padding: const EdgeInsets.only(bottom: 20),
-                  ))),
+                    return divideTiles(
+                        tiles: new ListViewItem(item.itemData, item.title),
+                        context: context,
+                        color: Colors.grey);
+                  }
+                },
+                padding: const EdgeInsets.only(bottom: 20),
+              ),
+            ),
+          ),
         ));
   }
 
@@ -243,7 +266,6 @@ class IndexState extends State<Index> {
         bottom: Divider.createBorderSide(context, color: color, width: 5),
       ),
     );
-
     return new DecoratedBox(
       position: DecorationPosition.foreground,
       decoration: decoration,
@@ -341,10 +363,12 @@ class ListViewItem extends StatelessWidget {
   void onClickItem(content_bean, mtitle) {
     print("click");
     Navigator.push(
-        mContext,
-        new MaterialPageRoute(
-            builder: (context) =>
-                new ArticleDetailsWebView(content_bean.item_id, mtitle)));
+      mContext,
+      new MaterialPageRoute(
+        builder: (context) =>
+            new ArticleDetailsWebView(content_bean.item_id, mtitle),
+      ),
+    );
   }
 }
 

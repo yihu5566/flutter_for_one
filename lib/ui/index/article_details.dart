@@ -6,7 +6,6 @@ import 'package:flutter_for_one/http/api.dart';
 import 'package:flutter_for_one/http/http_util.dart';
 import 'package:flutter_for_one/ui/index/article_details_bean.dart';
 
-import 'package:html/parser_console.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class ArticleDetails extends StatefulWidget {
@@ -43,7 +42,7 @@ class ArticleDetailsState extends State<ArticleDetails> {
       if (data != null) {
         Map<String, dynamic> responseJson = data;
         var address = new ArticleDetailsBean.fromJson(responseJson);
-        print("格式化数据：：" + responseJson['id']);
+//        print("格式化数据：：" + responseJson['id']);
         setState(() {
           _bean = address;
         });

@@ -17,4 +17,11 @@ class Api {
 
   static const String account_user_infor_url =
       "http://v3.wufazhuce.com:8000/api/user/info/10072491";
+
+  ///	GET /api/feeds/list/2019-04?user_id=10072491&channel=360&
+  ///sign=e038da75fece6d669b7c6adc788715d6&version=4.5.9
+  ///&uuid=ffffffff-d33b-3794-ffff-ffff8546fc17&platform=android HTTP/1.1
+  static const String history_record_url =
+      "http://v3.wufazhuce.com:8000/api/feeds/list/";
+
 }

@@ -55,9 +55,48 @@ class DateUtil {
 
   ///获取毫秒值
   static String getTime(int currentIndex) {
-    DateTime newTime =
-        getDateTimeByMs(getNowDateMs() - currentIndex * 24 * 60 * 60*1000); //后一天
+    DateTime newTime = getDateTimeByMs(
+        getNowDateMs() - currentIndex * 24 * 60 * 60 * 1000); //后一天
     return "${newTime.year}-${newTime.month}-${newTime.day}";
+  }
+
+  /// 获取年月时间
+  /// currentIndex 为0的话就是当前月份  +1就是之前的月份
+  static String getYearMonthTime(String currentIndex, bool isAutoSlide) {
+    if (currentIndex == null) {
+      return DateUtil.getCurrentMonthTime();
+    }
+    var split = currentIndex.split("-");
+
+    ///当前月份
+    var month = int.parse(split[1]);
+
+    ///当前年份
+    var year = int.parse(split[0]);
+    if (isAutoSlide) {
+      month = month - 1;
+    }
+    if (month <= 0) {
+      month = 12;
+      year = year - 1;
+    }
+    print("格式化的" + "${year}-${month}");
+
+    if (month < 10) {
+      return "${year}-0${month}";
+    } else {
+      return "${year}-${month}";
+    }
+  }
+
+  static String getCurrentMonthTime() {
+    DateTime newTime = getDateTimeByMs(getNowDateMs()); //后一天
+    return getDateStrByDateTime(newTime, format: DateFormat.YEAR_MONTH);
+  }
+
+  static String getCurrentMonthDayTime() {
+    DateTime newTime = getDateTimeByMs(getNowDateMs()); //后一天
+    return getDateStrByDateTime(newTime, format: DateFormat.YEAR_MONTH_DAY);
   }
 
   ///get DateTime By Milliseconds.

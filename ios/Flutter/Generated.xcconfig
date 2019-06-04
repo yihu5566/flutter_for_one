@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
 FLUTTER_ROOT=/Users/dongfang/development/flutter
-FLUTTER_APPLICATION_PATH=/Users/dongfang/Documents/android_studio_project_a/flutter_app
+FLUTTER_APPLICATION_PATH=/Users/dongfang/Documents/flutter_project/flutter_for_one
 FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build
 SYMROOT=${SOURCE_ROOT}/../build/ios
