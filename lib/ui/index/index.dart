@@ -7,11 +7,6 @@ import 'package:flutter_for_one/http/http_util.dart';
 import 'package:flutter_for_one/ui/index/MainBean.dart';
 import 'package:flutter_for_one/ui/index/article_details_webview.dart';
 import 'package:flutter_for_one/ui/index/history_record.dart';
-import 'package:flutter_for_one/ui/test/example_1.dart';
-import 'package:flutter_for_one/ui/test/example_2.dart';
-import 'package:flutter_for_one/ui/test/example_3.dart';
-import 'package:flutter_for_one/ui/test/example_4.dart';
-import 'package:flutter_for_one/ui/test/example_5.dart';
 import 'package:flutter_for_one/utils/common_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -37,7 +32,7 @@ class IndexState extends State<Index> {
     super.initState();
     _pageController = new PageController();
     getData(_currentIndex);
-    getUserData();
+//    getUserData();
   }
 
   @override
@@ -81,33 +76,20 @@ class IndexState extends State<Index> {
 
 //获取数据
   Future getData(int currentIndex) async {
-//    String jsonAddress = await _loadAddressAsset();
-//    Map<String, dynamic> jsonResponse = json.decode(jsonAddress);
-//    var address = new MainBean.fromJson(jsonResponse);
-//    print("格式化数据：：" + address.toString());
-//
-//    setState(() {
-//      _mMainBean = address;
-//      for (int i = 0; i < _mMainBean.content_list.length; i++) {
-//        itemList.add(new ListViewItem(_mMainBean.content_list[i]));
-//      }
-//      print("数据获取了啊啊：：" + _mMainBean.toString());
-//    });
-    //user_id=10072491&channel=yingyongbao&sign=d7736a4befa815dd1aed3fb00a50f2c0&version=4.5.6&uuid=ffffffff-d33b-3794-ffff-ffff8546fc17&platform=android"
     Map<String, String> map = new Map();
     map["user_id"] = '10072491';
     map["channel"] = 'yingyongbao';
-    map["sign"] = 'd7736a4befa815dd1aed3fb00a50f2c0';
-    map["version"] = '4.5.6';
+    map["sign"] = 'b2a76186a7f552b67f76b95135284091';
+    map["version"] = '4.6.0';
     map["uuid"] = 'ffffffff-d33b-3794-ffff-ffff8546fc17';
     map["platform"] = 'android';
     var time = DateUtil.getTime(_currentIndex);
 //    LogUtil.e(Api.One + time + "/北京");
-    HttpUtil.get(Api.One + time + "/北京", (data) {
+    HttpUtil.get(Api.One + time + "/天津", (data) {
       if (data != null) {
         Map<String, dynamic> responseJson = data;
         var address = new MainBean.fromJson(responseJson);
-//        print("格式化数据：：" + data['MenuBean']);
+//        print("格式化数据：：" + data);
         setState(() {
           _mMainBean = address;
           itemList.clear();
@@ -529,7 +511,7 @@ class FoldWidget extends StatelessWidget {
 
   List<Widget> _buildChildren(List<MenuBeanItem> root) {
     List<Widget> children = <Widget>[];
-
+    print(root.length.toString());
     for (int x = 0; x < root.length; x++) {
       children.add(new Container(
           margin: const EdgeInsets.only(bottom: 10),
@@ -546,8 +528,10 @@ class FoldWidget extends StatelessWidget {
                         : x == 1
                             ? "Ba As One"
                             : getTitle(int.parse(root[x].content_type))),
-                    new Text(root[x].title.toString(),
-                        softWrap: true, maxLines: 2),
+                    new Text(
+                        root[x].title == null ? "" : root[x].title.toString(),
+                        softWrap: true,
+                        maxLines: 2),
                   ],
                 ),
               )
@@ -577,7 +561,9 @@ class FoldWidget extends StatelessWidget {
         break;
       case 5:
         result = " 影视 ";
-
+        break;
+      default:
+        result = "  ";
         break;
     }
     return result;

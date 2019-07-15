@@ -11,7 +11,7 @@ class MainBean {
       {this.id, this.weatherBean, this.date, this.content_list, this.menuBean});
 
   factory MainBean.fromJson(Map<String, dynamic> json) {
-    print(json['content_list']);
+    print(json['id']);
     ContentBeanList weatherBeanList =
         ContentBeanList.fromJson(json['content_list']);
     return new MainBean(
@@ -32,8 +32,7 @@ class ContentBeanList {
 
   factory ContentBeanList.fromJson(List<dynamic> parsedJson) {
     List<ContentBean> photos = new List<ContentBean>();
-//    print("长度是：" + parsedJson.toString());
-
+    print("长度是：" + parsedJson.toString());
     photos = parsedJson.map((i) => ContentBean.fromJson(i)).toList();
 
     return new ContentBeanList(
@@ -51,6 +50,7 @@ class WeatherBean {
   WeatherBean({this.city_name, this.date, this.temperature, this.climate});
 
   factory WeatherBean.fromJson(Map<String, dynamic> json) {
+    print(json['city_name']);
     return new WeatherBean(
       city_name: json['city_name'],
       date: json['date'],
@@ -113,7 +113,7 @@ class ShareInfo {
 
   factory ShareInfo.fromJson(Map<String, dynamic> json) {
     return new ShareInfo(
-      title: json['title'],
+//      title: json['title'],
     );
   }
 }
@@ -137,6 +137,7 @@ class MenuBean {
   MenuBean({this.vol, this.menuBeanItem});
 
   factory MenuBean.fromJson(Map<String, dynamic> json) {
+    print(json['list']);
     MenuBeanItemList weatherBeanList = MenuBeanItemList.fromJson(json['list']);
     return MenuBean(
       vol: json['vol'],

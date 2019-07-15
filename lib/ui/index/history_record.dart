@@ -72,24 +72,25 @@ class HistoryRecordState extends State<HistoryRecord> {
                 children: <Widget>[
                   Flexible(
                     child: new StaggeredGridView.countBuilder(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 4.0,
-                        crossAxisSpacing: 4.0,
-                        padding: const EdgeInsets.all(4.0),
-                        itemCount: _mMainBean.length,
-                        itemBuilder: (context, index) {
-                          AccountData bean = _mMainBean[index];
-                          return _getGridViewItemUI(context, bean, index);
-                        },
-                        controller: _scrollController,
-                        staggeredTileBuilder: (int index) {
-                          AccountData bean1 = _mMainBean[index];
-                          if (bean1.cover == "title" && bean1.id != 1) {
-                            return new StaggeredTile.count(2, 0.2);
-                          } else {
-                            return new StaggeredTile.count(1, 1);
-                          }
-                        }),
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 4.0,
+                      crossAxisSpacing: 4.0,
+                      padding: const EdgeInsets.all(4.0),
+                      itemCount: _mMainBean.length,
+                      itemBuilder: (context, index) {
+                        AccountData bean = _mMainBean[index];
+                        return _getGridViewItemUI(context, bean, index);
+                      },
+                      controller: _scrollController,
+                      staggeredTileBuilder: (int index) {
+                        AccountData bean1 = _mMainBean[index];
+                        if (bean1.cover == "title" && bean1.id != 1) {
+                          return new StaggeredTile.count(2, 0.2);
+                        } else {
+                          return new StaggeredTile.count(1, 1);
+                        }
+                      },
+                    ),
                   ),
                   GestureDetector(
                       onTap: () {
@@ -144,11 +145,6 @@ class HistoryRecordState extends State<HistoryRecord> {
               _mMainBean.add(accountData);
               _mMainBean.addAll(address.title);
 
-//              var accountData1 = AccountData();
-//              accountData1.cover = "title";
-//              accountData1.date = newTime;
-//              accountData1.isLeft = false;
-//              _mMainBean.add(accountData1);
             } else {
               var accountData = AccountData();
               accountData.cover = "title";
